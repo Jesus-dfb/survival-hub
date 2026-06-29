@@ -4,12 +4,12 @@ import com.survivalhub.model.World;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WorldService {
 
-    public List<World> getWorlds() {
-        return List.of(
+    private final List<World> worlds = List.of( 
                 new World(
                         1L,
                         "Minecraft con amigos",
@@ -23,5 +23,12 @@ public class WorldService {
                         "Servidor para explorar, construir y derrotar bosses"
                 )
         );
+        public List<World> getWorlds() {
+            return worlds;
+        }
+        public Optional<World> getWorldById(Long id) {
+            return worlds.stream()
+                    .filter(world -> world.getId().equals(id))
+                    .findFirst();
+        }
     }
-}
