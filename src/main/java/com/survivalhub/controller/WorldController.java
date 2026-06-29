@@ -2,6 +2,7 @@ package com.survivalhub.controller;
 
 import com.survivalhub.model.World;
 import com.survivalhub.service.WorldService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,9 @@ public class WorldController {
     }
 
     @GetMapping("/api/worlds/{id}")
-    public World getWorldById(@PathVariable Long id) {
+    public ResponseEntity<World> getWorldById(@PathVariable Long id) {
         return worldService.getWorldById(id)
-                .orElse(null);
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
